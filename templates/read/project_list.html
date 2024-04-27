@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project List</title>
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.first_name }}</p>
+        <form method="post">
+          <a href="{% url 'logout' %}">Logout</a>
+          {% csrf_token %}
+        </form>
+    {% endif %}
+
+</head>
+<body>
+    <h1>Projects</h1>
+    <ul>
+        {% if no_projects %}
+        <h2>You don't have any projects yet.</h2>
+             <a href="{% url 'project_create' %}" class="btn btn-primary">Create New Project</a>
+        {% else %}
+
+        <h2>Your Projects</h2>
+        <a href="{% url 'project_create' %}" class="btn btn-primary mb-3">Create New Project</a>
+        <ul>
+            {% for project in projects %}
+            <li>
+                <a href="{% url 'project_detail' project.pk %}">{{ project.title }}</a>  </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </ul>
+
+
+</body>
+</html>
